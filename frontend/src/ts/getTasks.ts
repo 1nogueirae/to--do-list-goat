@@ -1,6 +1,6 @@
     export default async function getTasks(url: string) {
     try {
-        const res = await fetch(url + 'tasks', {
+        const res = await fetch(url + '/tasks', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

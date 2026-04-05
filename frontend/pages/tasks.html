@@ -16,7 +16,7 @@
     <h1 class="text-center my-5 fw-bold">Your Tasks</h1>
 
     <div class="container">
-        <div class="row justify-content-center">
+        <div id="createTask-super-Container" class="row justify-content-center">
             <div class="col-12 col-md-8 col-lg-6">
                 <div class="card shadow-sm border-0 rounded-4">
                     <div class="card-body p-4">
@@ -38,7 +38,7 @@
                             <label for="taskStatus" class="form-label">Task Status</label>
                             <select class="form-select" id="taskStatus" aria-label="Default select example">
                                 <option value="pending">Pending</option>
-                                <option value="in-progress">In Progress</option>
+                                <option value="in_progress">In Progress</option>
                             </select>
                         </div>
 
@@ -48,13 +48,48 @@
             </div>
         </div>
 
-        <div class="row justify-content-center mt-4">
+        <div id="tasks-super-Container" class="row justify-content-center mt-4">
             <div class="col-12 col-md-8 col-lg-6">
                 <div id="tasksContainer" class="d-flex flex-column gap-3">
                     <!-- Task cards will be dynamically added here -->
                 </div>
             </div>
         </div>
+
+        <div class="row justify-content-center mt-4 overlay" id="editModalContainer" style="display: none;">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="card shadow-sm border-0 rounded-4">
+                    <div class="card-body p-4">
+                        <div class="d-flex gap-2 mb-3">
+                            <p class="fw-semibold mb-0">Edit Task</p>
+                            <span id="editTaskId" class="form-label">#</span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editTaskName" class="form-label">Task Name*</label>
+                            <input type="text" class="form-control" id="editTaskName" placeholder="Task Name" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="editTaskDescription" class="form-label">Task Description</label>
+                            <textarea class="form-control" id="editTaskDescription" rows="3"
+                                placeholder="Task Description"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="editTaskStatus" class="form-label">Task Status</label>
+                            <select class="form-select" id="editTaskStatus" aria-label="Default select example">
+                                <option value="pending">Pending</option>
+                                <option value="in_progress">In Progress</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-secondary w-10" id="saveChangesBtn">Save Changes</button>
+                        <button type="submit" class="btn btn-danger w-10" id="cancelTaskEditBtn">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="module" src="../src/js/app.js"></script>

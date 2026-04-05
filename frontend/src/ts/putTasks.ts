@@ -1,7 +1,7 @@
-export default async function postTasks(url: string, task: object) {
+export default async function putTasks(url: string, task: object, id: number) {
     try {
-        const res = await fetch(url + '/tasks', {
-            method: 'POST',
+        const res = await fetch(url + `/tasks/${id}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },

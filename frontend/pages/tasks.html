@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+<body>
+
+    <h1 class="text-center my-5 fw-bold">Your Tasks</h1>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="card shadow-sm border-0 rounded-4">
+                    <div class="card-body p-4">
+                        <p class="fw-semibold mb-3">Create a new task</p>
+
+                        <div class="mb-3">
+                            <label for="taskName" class="form-label">Task Name*</label>
+                            <input type="text" class="form-control" id="taskName" placeholder="Enter task name"
+                                required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="taskDescription" class="form-label">Task Description</label>
+                            <textarea class="form-control" id="taskDescription" rows="3"
+                                placeholder="Enter optional task description"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="taskStatus" class="form-label">Task Status</label>
+                            <select class="form-select" id="taskStatus" aria-label="Default select example">
+                                <option value="pending">Pending</option>
+                                <option value="in-progress">In Progress</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-secondary w-10" id="addTaskBtn">Add Task</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-4">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div id="tasksContainer" class="d-flex flex-column gap-3">
+                    <!-- Task cards will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="module" src="../src/js/app.js"></script>
+</body>
+
+</html>

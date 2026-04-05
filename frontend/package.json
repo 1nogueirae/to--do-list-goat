@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "dependencies": {
+    "bootstrap": "~5.3.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "@types/jquery": "^3.5.32"
+  }
+}

@@ -12,9 +12,9 @@ router.get('/:id', async (req, res) => {
     const id = req.params.id
     const task = await Tasks.findByPk(id)
     if (task) {
-        res.status(200).json({ message: `Task searched successfully`, task: task})
+        res.status(200).json({ message: `Task searched successfully`, task: task })
     } else {
-        res.status(400).json({ message: `Task not found` })
+        res.status(404).json({ message: `Task not found` })
     }
 })
 
@@ -33,11 +33,7 @@ router.put('/:id', taskMiddleware, async (req, res) => {
     if (task && data) {
         task.title = data.title
         task.description = data.description
-        if (!data.status) {
-            task.status = task.status
-        } else {
-            task.status = data.status
-        }
+        task.status = data.status ?? task.status
         await task.save()
         res.status(200).json({ message: `Task updated successfully`, task })
     } else {

@@ -3,3 +3,4 @@ node_modules
 .http
 CLAUDE.md
 backend/src/database/database.sqlite
+frontend/src/js

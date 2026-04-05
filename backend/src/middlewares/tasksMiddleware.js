@@ -4,7 +4,7 @@ const addFormats = require('ajv-formats')
 const taskSchema = require('../schemas/task.schema')
 addFormats(ajv)
 
-function taskValidate(req, res, next) {
+async function taskValidate(req, res, next) {
     const task = req.body
     const validate = ajv.compile(taskSchema)
     const valid = validate(task)

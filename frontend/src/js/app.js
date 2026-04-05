@@ -19,7 +19,6 @@ $(document).ready(function () {
             return;
         }
         response.forEach((task) => {
-            console.log(`task status: ${task.status}`);
             let taskBadgeClass = '';
             switch (task.status) {
                 case 'Pending':

@@ -1,6 +1,6 @@
 export default async function deleteTask(url: string, id: number) {
     try {
-        const res = await fetch(url + `/tasks/${id}`, {
+        const res = await fetch(url + `/api/tasks/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

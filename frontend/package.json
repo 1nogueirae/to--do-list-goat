@@ -4,10 +4,11 @@
     "watch": "tsc --watch"
   },
   "dependencies": {
-    "bootstrap": "~5.3.8"
+    "bootstrap": "~5.3.8",
+    "jquery": "~4.0.0"
   },
   "devDependencies": {
-    "typescript": "^5.8.3",
-    "@types/jquery": "^3.5.32"
+    "@types/jquery": "^3.5.32",
+    "typescript": "^5.8.3"
   }
 }

@@ -7,7 +7,6 @@ import deleteTask from './deleteTask.js'
 $(document).ready(function () {
     const url = 'http://localhost:3000'
     const tasksContainer = $('#tasksContainer')
-    const editModalContainer = $('#editModalContainer')
     const addTaskBtn = $('#addTaskBtn')
 
     getTasks(url).then(response => {
@@ -41,7 +40,10 @@ $(document).ready(function () {
                     break
             }
 
-            const taskElement = `
+            let taskElement = ``
+
+            if (task.status !== 'Done') {
+                taskElement = `
                     <div class="card shadow-sm border-0 rounded-4">
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-start gap-3">
@@ -53,11 +55,28 @@ $(document).ready(function () {
                                 <div class="ms-auto d-flex flex-column gap-2">
                                     <button id="editTaskBtn${task.id}" class="btn btn-secondary">Edit Task</button>
                                     <button id="deleteTaskBtn${task.id}" class="btn btn-danger">Delete Task</button>
+                                    <button id="finishTaskBtn${task.id}" class="btn btn-success">Finish Task</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 `
+            } else {
+                taskElement = `
+                    <div class="card shadow-sm border-0 rounded-4">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start gap-3">
+                                <div class="flex-grow-1">
+                                    <p class="fw-bold mb-3" id="titleTask${task.id}">${task.title}</p>
+                                    <p id="descriptionTask${task.id}">${task.description}</p>
+                                    <span class="badge ${taskBadgeClass}" id="statusTask${task.id}">${task.status}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+
             tasksContainer.append(taskElement)
         })
 
@@ -125,6 +144,22 @@ $(document).ready(function () {
 
         $(`#cancelTaskEditBtn`).on('click', function () {
             $(`#editModalContainer`).hide()
+        })
+    })
+
+    $(document).on('click', '[id^="finishTaskBtn"]', function () {
+        const idAttr = $(this).attr('id')
+        if (!idAttr) return
+        const id = parseInt(idAttr.split('finishTaskBtn')[1])
+
+        const title = $(`#titleTask${id}`).text()
+        const description = $(`#descriptionTask${id}`).text()
+        const finishedTask = new Task(title, description, 'done')
+
+        putTasks(url, finishedTask, id).then(() => {
+            location.reload()
+        }).catch(error => {
+            console.error('Error updating task: ', error)
         })
     })
 })

@@ -1,6 +1,6 @@
 export default async function postTasks(url: string, task: object) {
     try {
-        const res = await fetch(url + '/tasks', {
+        const res = await fetch(url + '/api/tasks', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

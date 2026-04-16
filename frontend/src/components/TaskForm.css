@@ -33,6 +33,7 @@
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: #a0a0a0;
+  font-family: var(--mono);
 }
 
 .task-form-field input,
@@ -74,7 +75,8 @@
   align-self: flex-start;
   border: none;
   cursor: pointer;
-  font-family: inherit;
+  font-family: var(--mono);
+  font-weight: 600;
 }
 
 .task-form .btn-primary:disabled {
@@ -97,6 +99,8 @@
   font-size: 0.85rem;
   cursor: pointer;
   transition: border-color 0.15s ease, color 0.15s ease;
+  font-family: var(--mono);
+  font-weight: 600;
 }
 
 .task-form-cancel-btn:hover {

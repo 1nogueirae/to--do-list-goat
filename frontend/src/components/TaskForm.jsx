@@ -3,7 +3,7 @@ import './TaskForm.css'
 
 const API_URL = 'http://localhost:3000/api/tasks'
 
-function TaskForm({ onTaskCreated, onTaskUpdated, editingTask, onCancelEdit }) {
+function TaskForm({ onTaskCreated, onTaskUpdated, editingTask, onCancelEdit, showToast }) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [status, setStatus] = useState('pending')
@@ -46,6 +46,7 @@ function TaskForm({ onTaskCreated, onTaskUpdated, editingTask, onCancelEdit }) {
       setDescription('')
       setStatus('pending')
       onTaskCreated()
+      showToast('Task created successfully!', 'success')
     } catch (err) {
       setError(err.message)
     } finally {

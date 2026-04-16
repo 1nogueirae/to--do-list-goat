@@ -7,20 +7,20 @@ Aplicação full stack para gerenciamento de tarefas, desenvolvida como projeto 
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
 ![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=sequelize&logoColor=white)
-![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
 
 ## Resumo
 
-Duitflow é uma aplicação de lista de tarefas com backend em Node.js e frontend em React. O usuário pode criar, editar, concluir e remover tarefas por meio de uma interface minimalista, enquanto a API REST gerencia a persistência dos dados em um banco SQLite.
+Duitflow é uma aplicação de lista de tarefas com backend em Node.js e frontend em React. O usuário pode criar, editar, concluir e remover tarefas por meio de uma interface minimalista com tema escuro, enquanto a API REST gerencia a persistência dos dados em um banco PostgreSQL.
 
 ## Stack
 
 **Backend**
 - Node.js + Express 5
-- Sequelize + SQLite3
+- Sequelize + PostgreSQL (`pg`)
 - AJV + ajv-errors + ajv-formats (validação de schema)
 - dotenv + cors
 
@@ -32,7 +32,7 @@ Duitflow é uma aplicação de lista de tarefas com backend em Node.js e fronten
 ## Estrutura
 
 ```text
-to-do-list/
+Duitflow/
 ├── backend/
 │   └── src/
 │       ├── server.js
@@ -51,7 +51,14 @@ to-do-list/
         ├── main.jsx
         ├── App.jsx
         ├── components/
+        │   ├── Header.jsx
+        │   ├── TaskCard.jsx
+        │   ├── TaskForm.jsx
+        │   ├── TaskList.jsx
+        │   └── Toast.jsx
         └── pages/
+            ├── Home.jsx
+            └── Tasks.jsx
 ```
 
 ## Variáveis de ambiente
@@ -61,6 +68,7 @@ Crie o arquivo `backend/.env` com base em `backend/.env.example`:
 ```env
 PORT=3000
 NODE_ENV=development
+DATABASE_URL=postgresql://postgres:password@localhost:5432/duitflow
 ```
 
 ## Como rodar
@@ -72,7 +80,15 @@ cd backend
 npm install
 ```
 
-**2. Rode as migrações do banco**
+**2. Configure o banco de dados**
+
+Certifique-se de ter o PostgreSQL rodando e crie o banco:
+
+```sql
+CREATE DATABASE duitflow;
+```
+
+Depois rode as migrações:
 
 ```bash
 npx sequelize-cli db:migrate --config src/database/config/config.js --migrations-path src/database/migrations
@@ -142,8 +158,8 @@ Base: `/api/tasks`
 
 ## Banco de dados
 
-- **Dialeto:** SQLite
-- **Arquivo:** `backend/src/database/database.sqlite`
+- **Dialeto:** PostgreSQL
+- **Conexão:** via variável de ambiente `DATABASE_URL`
 
 **Tabela `Tasks`:**
 
@@ -160,6 +176,7 @@ Base: `/api/tasks`
 
 - O backend roda na porta 3000 e o frontend na porta 5173 (Vite). CORS está habilitado no backend.
 - O backend valida os dados das tarefas com AJV antes de persistir.
+- O frontend exibe notificações toast para feedback de criação, edição, conclusão e remoção de tarefas.
 - Bootstrap é instalado via npm e importado no projeto React.
 
 ## Troubleshooting
@@ -169,3 +186,4 @@ Base: `/api/tasks`
 | API retorna 400 | Verifique se `title` está presente no payload |
 | Migração falha | Rode o comando de dentro da pasta `backend/` |
 | Frontend não conecta ao backend | Confirme que o backend está rodando na porta 3000 |
+| Erro de conexão com o banco | Verifique se o PostgreSQL está rodando e se `DATABASE_URL` está correto no `.env` |

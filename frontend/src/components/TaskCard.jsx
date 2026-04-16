@@ -18,7 +18,7 @@ const getStatusLabel = (status) => {
     return map[status] ?? status
 }
 
-function TaskCard({ task, onDelete, onEdit }) {
+function TaskCard({ task, onDelete, onEdit, onComplete }) {
     return (
         <article className="task-card">
             <div className="task-card-header">
@@ -31,13 +31,13 @@ function TaskCard({ task, onDelete, onEdit }) {
                     <span className={getBadgeClass(task.status)}>
                         {getStatusLabel(task.status)}
                     </span>
-                    <button type="button" className="task-complete-btn">
+                    <button type="button" className="task-complete-btn" onClick={() => onComplete(task.id)}>
                         <i className="bi bi-check-lg"></i>
                     </button>
                     <button type="button" className="task-edit-btn" onClick={() => onEdit(task)}>
                         <i className="bi bi-pencil"></i>
                     </button>
-                    <button type="button" className="task-delete-btn" onClick={() => onDelete(task.id)}>
+                    <button type="button" className="task-delete-btn" onClick={() => { if (window.confirm('Delete this task?')) onDelete(task.id) }}>
                         <i className="bi bi-trash"></i>
                     </button>
                 </div>

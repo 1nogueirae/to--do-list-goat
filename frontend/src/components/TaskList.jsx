@@ -1,7 +1,7 @@
 import TaskCard from './TaskCard'
 import './TaskList.css'
 
-function TaskList({ tasks, isLoading, error, onDelete, onEdit }) {
+function TaskList({ tasks, isLoading, error, onDelete, onEdit, onComplete }) {
   if (isLoading) return <p className="task-list-feedback">Loading tasks...</p>
   if (error) return <p className="task-list-feedback task-list-feedback-error">{error}</p>
   if (tasks.length === 0) return <p className="task-list-feedback">No tasks found.</p>
@@ -11,7 +11,7 @@ function TaskList({ tasks, isLoading, error, onDelete, onEdit }) {
       <ul className="list-unstyled task-list-grid">
         {tasks.map((task) => (
           <li key={task.id}>
-            <TaskCard task={task} onDelete={onDelete} onEdit={onEdit} />
+            <TaskCard task={task} onDelete={onDelete} onEdit={onEdit} onComplete={onComplete} />
           </li>
         ))}
       </ul>

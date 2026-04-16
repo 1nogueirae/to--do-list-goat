@@ -25,6 +25,8 @@
   font-size: 0.75rem;
   letter-spacing: 0.05em;
   margin-bottom: 0.2rem;
+  font-family: var(--mono);
+  font-weight: 600;
 }
 
 .task-title {
@@ -54,6 +56,7 @@
   white-space: nowrap;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  font-family: var(--mono);
 }
 
 .task-badge-pending {
@@ -90,6 +93,8 @@
   font-size: 0.8rem;
   cursor: pointer;
   transition: opacity 0.15s ease;
+  font-family: var(--mono);
+  font-weight: 600;
 }
 
 .task-delete-btn:hover,

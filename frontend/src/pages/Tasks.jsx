@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import TaskForm from '../components/TaskForm'
 import TaskList from '../components/TaskList'
+import Toast from '../components/Toast'
 
 const API_URL = 'http://localhost:3000/api/tasks'
 
@@ -9,6 +10,14 @@ function Tasks() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
   const [taskBeingEdited, setTaskBeingEdited] = useState(null)
+  const [toast, setToast] = useState(null)
+  const toastTimeoutRef = useRef(null)
+
+  const showToast = (message, type) => {
+    if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current)
+    setToast({ message, type })
+    toastTimeoutRef.current = setTimeout(() => setToast(null), 3000)
+  }
 
   const fetchTasks = async () => {
     setIsLoading(true)
@@ -34,6 +43,7 @@ function Tasks() {
       })
       if (!response.ok) throw new Error('Could not update task.')
       setTaskBeingEdited(null)
+      showToast('Task updated successfully!', 'success')
       fetchTasks()
     } catch (err) {
       setError(err.message)
@@ -54,13 +64,38 @@ function Tasks() {
       const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' })
       if (!response.ok) throw new Error('Could not delete task.')
       fetchTasks()
+      showToast('Task deleted successfully!', 'success')
     } catch (err) {
       setError(err.message)
     }
   }
 
+  const taskComplete = async (taskId) => {
+    setError(null)
+    const task = tasks.find((t) => t.id === taskId)
+    if (!task) return
+    try {
+      const response = await fetch(`${API_URL}/${taskId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: task.title, description: task.description, status: 'done' }),
+      })
+      if (!response.ok) throw new Error('Could not complete task.')
+      showToast('Task completed successfully!', 'success')
+      fetchTasks()
+    } catch (err) {
+      setError(err.message)
+      showToast(err.message, 'error')
+    }
+  }
   useEffect(() => {
     fetchTasks()
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current)
+    }
   }, [])
 
   return (
@@ -70,8 +105,10 @@ function Tasks() {
         onTaskUpdated={updateTask}
         editingTask={taskBeingEdited}
         onCancelEdit={cancelTaskEdit}
+        showToast={showToast}
       />
-      <TaskList tasks={tasks} isLoading={isLoading} error={error} onDelete={deleteTask} onEdit={startTaskEdit} />
+      <TaskList tasks={tasks} isLoading={isLoading} error={error} onDelete={deleteTask} onEdit={startTaskEdit} onComplete={taskComplete} />
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </main>
   )
 }

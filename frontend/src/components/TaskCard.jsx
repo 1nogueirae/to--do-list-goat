@@ -31,9 +31,13 @@ function TaskCard({ task, onDelete, onEdit, onComplete }) {
                     <span className={getBadgeClass(task.status)}>
                         {getStatusLabel(task.status)}
                     </span>
-                    <button type="button" className="task-complete-btn" onClick={() => onComplete(task.id)}>
-                        <i className="bi bi-check-lg"></i>
-                    </button>
+                    {task.status !== 'done' && (
+                        <>
+                            <button type="button" className="task-complete-btn" onClick={() => onComplete(task.id)}>
+                                <i className="bi bi-check-lg"></i>
+                            </button>
+                        </>
+                    )}
                     <button type="button" className="task-edit-btn" onClick={() => onEdit(task)}>
                         <i className="bi bi-pencil"></i>
                     </button>

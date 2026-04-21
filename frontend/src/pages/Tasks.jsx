@@ -13,6 +13,7 @@ function Tasks() {
   const [taskBeingEdited, setTaskBeingEdited] = useState(null)
   const [toast, setToast] = useState(null)
   const toastTimeoutRef = useRef(null)
+  const [filter, setFilter] = useState('all')
 
   const showToast = (message, type) => {
     if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current)
@@ -89,6 +90,7 @@ function Tasks() {
       showToast(err.message, 'error')
     }
   }
+
   useEffect(() => {
     fetchTasks()
   }, [])
@@ -108,8 +110,8 @@ function Tasks() {
         onCancelEdit={cancelTaskEdit}
         showToast={showToast}
       />
-      <TaskFilter></TaskFilter>
-      <TaskList tasks={tasks} isLoading={isLoading} error={error} onDelete={deleteTask} onEdit={startTaskEdit} onComplete={taskComplete} />
+      <TaskFilter filter={filter} onFilterChange={setFilter} />
+      <TaskList tasks={tasks.filter((task) => filter === 'all' || task.status === filter)} isLoading={isLoading} error={error} onDelete={deleteTask} onEdit={startTaskEdit} onComplete={taskComplete} />
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </main>
   )

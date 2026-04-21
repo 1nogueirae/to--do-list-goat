@@ -15,13 +15,15 @@ app.use('/api/tasks', apiTasksRoute)
 
 app.use((err, req, res, next) => {
     const status = err.status ?? 500
+    const clientMessage = err.message ?? 'Bad request'
+
     if (status >= 500) {
         console.error(err)
     } else {
-        console.error(err.message)
+        console.warn(clientMessage)
     }
 
-    const message = status >= 500 ? 'Internal server error' : (err.message ?? 'Unexpected error')
+    const message = status >= 500 ? 'Internal server error' : clientMessage
     res.status(status).json({ message })
 })
 

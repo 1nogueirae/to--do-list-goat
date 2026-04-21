@@ -15,7 +15,7 @@ app.use('/api/tasks', apiTasksRoute)
 
 app.use((err, req, res, next) => {
     const status = err.status ?? 500
-    const fallbackMessage = status === 400 ? 'Bad request' : 'An error occurred'
+    const fallbackMessage = status >= 400 && status < 500 ? 'Bad request' : 'An error occurred'
     const clientMessage = err.message ?? fallbackMessage
 
     if (status >= 500) {

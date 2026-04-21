@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import TaskForm from '../components/TaskForm'
 import TaskList from '../components/TaskList'
 import Toast from '../components/Toast'
+import TaskFilter from '../components/TaskFilter'
 
 const API_URL = 'http://localhost:3000/api/tasks'
 
@@ -107,6 +108,7 @@ function Tasks() {
         onCancelEdit={cancelTaskEdit}
         showToast={showToast}
       />
+      <TaskFilter></TaskFilter>
       <TaskList tasks={tasks} isLoading={isLoading} error={error} onDelete={deleteTask} onEdit={startTaskEdit} onComplete={taskComplete} />
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </main>
